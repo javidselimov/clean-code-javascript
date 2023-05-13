@@ -45,3 +45,45 @@ const currentDate = moment().format("YYYY/MM/DD");
 
 **[⬆ Mündəricat](#Mündəricat)**
 
+
+### Eyni növ dəyişən üçün eyni söz istifadə edin
+
+**Pis:**
+
+```javascript
+getUserInfo();
+getClientData();
+getCustomerRecord();
+```
+
+**Yaxşı:**
+
+```javascript
+getUser();
+```
+
+**[⬆ Mündəricat](#Mündəricat)**
+
+### Rahat axtarıla bilən adlardan istifadə edin
+
+Daha çox oxuyuruq nəinki yazırıq. Rahat oxunan kod yazmaq önəmlidir. Dəyişənləri mənalı və başa düşülən _adlandırmayaraq_, kodu oxuyanın işini çətinə salırıq.
+Adlar axtarıla bilən olmalıdır. [buddy.js](https://github.com/danielstjules/buddy.js) və
+[ESLint](https://github.com/eslint/eslint/blob/660e0918933e6e7fede26bc675a0763a6b357c94/docs/rules/no-magic-numbers.md) kimi alətlər sizə faydalı ola bilər.
+
+**Pis:**
+
+```javascript
+// 86400000 nədir ?
+setTimeout(blastOff, 86400000);
+```
+
+**Yaxşı:**
+
+```javascript
+// Bunları büyük həriflə adlandırılmış sabitlər olaraq təyin edin.
+const MILLISECONDS_IN_A_DAY = 86_400_000;
+
+setTimeout(blastOff, MILLISECONDS_IN_A_DAY);
+```
+
+**[⬆ Mündəricat](#Mündəricat)**
