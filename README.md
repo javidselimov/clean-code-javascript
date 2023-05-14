@@ -280,3 +280,31 @@ function isActiveClient(client) {
 ```
 
 **[⬆ Mündəricat](#Mündəricat)**
+
+### Funksiayanın adı gördüyü işi ehtiva etməlidir
+
+**Pis:**
+
+```javascript
+function addToDate(date, month) {
+  // ...
+}
+
+const date = new Date();
+
+// Funksiya adı onun hansı parametrləri aldığını demir
+addToDate(date, 1);
+```
+
+**Yaxşı:**
+
+```javascript
+function addMonthToDate(month, date) {
+  // ...
+}
+
+const date = new Date();
+addMonthToDate(1, date);
+```
+
+**[⬆ Mündəricat](#Mündəricat)**
