@@ -308,3 +308,73 @@ addMonthToDate(1, date);
 ```
 
 **[⬆ Mündəricat](#Mündəricat)**
+
+### Funksiyalarda  sadəcə bir səviyyə abstraksiya olmalıdır.
+
+Birdən çox abstraksiya olduqda funksiyanız yüklənir,çox iş yerinə yetirir. Mürəkkəb funksiyaların kiçik hissələrə ayrılması oxunaqlığı artırır, test olunmasını asanlaşdırır.
+
+**Pis:**
+
+```javascript
+function parseBetterJSAlternative(code) {
+  const REGEXES = [
+    // ...
+  ];
+
+  const statements = code.split(" ");
+  const tokens = [];
+  REGEXES.forEach(REGEX => {
+    statements.forEach(statement => {
+      // ...
+    });
+  });
+
+  const ast = [];
+  tokens.forEach(token => {
+    // lex...
+  });
+
+  ast.forEach(node => {
+    // parse...
+  });
+}
+```
+
+**Yaxşı:**
+
+```javascript
+function parseBetterJSAlternative(code) {
+  const tokens = tokenize(code);
+  const syntaxTree = parse(tokens);
+  syntaxTree.forEach(node => {
+    // parse...
+  });
+}
+
+function tokenize(code) {
+  const REGEXES = [
+    // ...
+  ];
+
+  const statements = code.split(" ");
+  const tokens = [];
+  REGEXES.forEach(REGEX => {
+    statements.forEach(statement => {
+      tokens.push(/* ... */);
+    });
+  });
+
+  return tokens;
+}
+
+function parse(tokens) {
+  const syntaxTree = [];
+  tokens.forEach(token => {
+    syntaxTree.push(/* ... */);
+  });
+
+  return syntaxTree;
+}
+```
+
+**[⬆ Mündəricat](#Mündəricat)**
