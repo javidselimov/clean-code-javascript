@@ -502,3 +502,33 @@ createMenu(menuConfig);
 ```
 
 **[⬆ Mündəricat](#Mündəricat)**
+
+### Funksiya parametrlərində işarələr (flag) istifadə etmə
+
+İşarələr funksiyanın birdən çox iş görməyindən xəbər verir. Biz dedik ki funksiyalar sadəcə bir iş görməlidir.Əgər aşağıdakı kimi Məntiqi operatorlardan istifadə etdiyiniz bir funksiyanız olarsa onu parçalarına ayırın.
+
+**Pis:**
+
+```javascript
+function createFile(name, temp) {
+  if (temp) {
+    fs.create(`./temp/${name}`);
+  } else {
+    fs.create(name);
+  }
+}
+```
+
+**Yaxşı:**
+
+```javascript
+function createFile(name) {
+  fs.create(name);
+}
+
+function createTempFile(name) {
+  createFile(`./temp/${name}`);
+}
+```
+
+**[⬆ Mündəricat](#Mündəricat)**
