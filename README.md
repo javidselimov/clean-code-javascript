@@ -212,8 +212,6 @@ Funksiya parametrlərinin miqdarının məhdudlaşdırılması olduqca vacibdir,
 
 İkidən çox arqument varsa,yaxşı olardı ki onları bir obyektə yığıb obyekti arqument olaraq yollayaq.
 
-JavaScript havada nesne yapmanıza olanak sağladığı için, bir çok sınıf yapısına gerek kalmadan,  bir nesneyi birden fazla nesne kullanmadan kullanabilirsiniz.
-
 Funksiyanın hansı parametrləri gözlədiyini aydınlaşdırmaq üçün  ES2015 / ES6 destruktrizasiya sintaksisi istifadə edə bilərsiz. Faydaları bunlardır:
 
 1. Funksiyaya baxan kimi nə xüsusiyyəti gözlədiyini anlamaq olur..
@@ -374,6 +372,79 @@ function parse(tokens) {
   });
 
   return syntaxTree;
+}
+```
+
+**[⬆ Mündəricat](#Mündəricat)**
+
+### Təkrar kodu sil
+
+Bacardığımız qədər dublikat kodlardan qaçmağa çalışaq. Dublikat kod pisdir, çünki bu o deməkdir ki, məntiqi dəyişikliklər etmək lazım olduqda birdən çox yeri dəyişməli olacaqsınız.
+
+Təsəvvür edin ki, bir restoran işlədirsiniz və stokları izləyirsiniz: bütün pomidorlarınız, soğanlarınız, sarımsaqlarınız, ədviyyatlarınız və s. Bu məlumatı saxladığınız bir çox siyahılarınız varsa, bir dəyişiklik olduqda bütün siyahılarda o dəyişikliyi etməli olacaqsınız. Yalnız bir siyahınız varsa, yeniləmək üçün yalnız bir yer var!
+
+Çox vaxt dublikat kodlar yazırsız, çünki sizin iki və ya daha çox bir  fərqli funksiyalarınız olur, amma ortaq cəhətləri olur.Dublikat kodun silinməsi yalnız bir funksiya/modul/sinif ilə bu müxtəlif şeylər dəstini idarə edə biləcək bir abstraksiya yaratmaq deməkdir.
+
+Abstraksiyanı düzgün əldə etmək çox vacibdir, buna görə də siz Dərslər bölməsində verilmiş _SOLID_ prinsiplərinə əməl etməlisiniz. Pis abstraksiyalar dublikat koddan daha pis ola bilər, ona görə də diqqətli olun! Bütün bunlardan sonra yaxşı bir abstraksiya edə bilirsinizsə, bunu edin! Özünüzü təkrarlamayın, əks halda bir şeyi dəyişdirmək istədiyiniz zaman birdən çox yeri yeniləyəcəksiniz.
+
+**Pis:**
+
+```javascript
+function showDeveloperList(developers) {
+  developers.forEach(developer => {
+    const expectedSalary = developer.calculateExpectedSalary();
+    const experience = developer.getExperience();
+    const githubLink = developer.getGithubLink();
+    const data = {
+      expectedSalary,
+      experience,
+      githubLink
+    };
+
+    render(data);
+  });
+}
+
+function showManagerList(managers) {
+  managers.forEach(manager => {
+    const expectedSalary = manager.calculateExpectedSalary();
+    const experience = manager.getExperience();
+    const portfolio = manager.getMBAProjects();
+    const data = {
+      expectedSalary,
+      experience,
+      portfolio
+    };
+
+    render(data);
+  });
+}
+```
+
+**Yaxşı:**
+
+```javascript
+function showEmployeeList(employees) {
+  employees.forEach(employee => {
+    const expectedSalary = employee.calculateExpectedSalary();
+    const experience = employee.getExperience();
+
+    const data = {
+      expectedSalary,
+      experience
+    };
+
+    switch (employee.type) {
+      case "manager":
+        data.portfolio = employee.getMBAProjects();
+        break;
+      case "developer":
+        data.githubLink = employee.getGithubLink();
+        break;
+    }
+
+    render(data);
+  });
 }
 ```
 
