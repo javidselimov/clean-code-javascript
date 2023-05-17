@@ -532,3 +532,47 @@ function createTempFile(name) {
 ```
 
 **[⬆ Mündəricat](#Mündəricat)**
+
+### Yan təsirlərdən yayın (1-ci hissə)
+
+Funksiya bir dəyər götürüb başqa bir dəyər və ya dəyərləri qaytarmaqdan başqa bir şey edərsə, yan təsir yaradır. Yan təsir fayla yazmaq, bəzi qlobal dəyişəni dəyişdirmək və ya təsadüfən bütün pulunuzu bir başqasına ;/ ola bilər.
+
+Zaman zaman yan təsirə malik funksiya yazmalı olursunuz. Əvvəlki nümunədə olduğu kimi, hər hansı bir fayla nəsə yazmaq gərək ola bilər.Bunu etmək üçün çoxlu funksiyalar və ya siniflər yaratmayın. Bunu edən bir _service_-ə sahib olun. Bir və tək.
+
+Buradaki ana nokta, arasında durumu(state) paylaşmak, herhangi bir şeyle yazılabilen değiştirilebilir(mutable) veri türlerini kullanmak ve yan etkilerinizin nerede ortaya çıktığını merkezileştirmemek gibi yaygın tuzaklardan kaçınmaktır. Bunu yapabilirseniz, diğer programcıların büyük çoğunluğundan daha mutlu olacaksınız.
+
+Burada əsas məqsəd, heç bir qruluşu olmayan obyektlər arasınd _state_ paylaşmaq,
+_mutable_ data tiplərini istifadə etmək və yan təsirlərin harada yarandığını anlaya bilməmək kimi yayılmış tələlərdən qaçmaqdır.Əgər bunu edə bilirsənsə bir çox developerdən xoşbəxt olacaqsan
+
+
+**Pis:**
+
+```javascript
+// Aşağıdaki fonksiyon Global değişkeni refere alıyor
+// Bu adı kullanan başka bir fonksiyonumuz olsaydı, şimdi bir dizi olurdu ve onu bozacaktı.
+let name = "Ryan McDermott";
+
+function splitIntoFirstAndLastName() {
+  name = name.split(" ");
+}
+
+splitIntoFirstAndLastName();
+
+console.log(name); // ['Ryan', 'McDermott'];
+```
+
+**Yaxşı:**
+
+```javascript
+function splitIntoFirstAndLastName(name) {
+  return name.split(" ");
+}
+
+const name = "Ryan McDermott";
+const newName = splitIntoFirstAndLastName(name);
+
+console.log(name); // 'Ryan McDermott';
+console.log(newName); // ['Ryan', 'McDermott'];
+```
+
+**[⬆ Mündəricat](#Mündəricat)**
