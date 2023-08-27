@@ -576,3 +576,38 @@ console.log(newName); // ['Ryan', 'McDermott'];
 ```
 
 **[⬆ Mündəricat](#Mündəricat)**
+
+### Yan təsirlərdən yayın (2 ci hissə)
+
+JavaScript-də primitivlər dəyər olaraq, obyektlər/massivlər isə istinad olaraq ötürülür.
+
+Bu halda, funksiyanız obyektlərə və massivlərə dəyişiklik edərsə
+məsələn, alış-veriş səbəti massivində almaq üçün bir element əlavə etmək kimi,
+Bu "səbət" massivindən istifadə edən digər funksiyalar bundan təsirlənəcək.
+Bu yaxşı ola bilər, amma pis də ola bilər. Pis olan halı fərz edək:
+
+İstifadəçi "Al" düyməsini sıxır və bu "almaq" funksiyası işə salaraq serverə sorğu göndərir və "səbət" sətirini serverə göndərir. Səhv şəbəkə bağlantısı səbəbindən "satın alınmış" funksiyası sorğunu təkrar etməyə davam etməlidir. İndi, bu arada, əgər istifadəçi şəbəkə sorğusu başlamazdan əvvəl istəmədiyi elementdə təsadüfən "Səbətə əlavə et" düyməsini klikləsə nə olacaq? Əgər bu baş verərsə və şəbəkə sorğusu başlasa, o, təsadüfən alınmış elementi göndərəcək, çünki o, 'Elementi Səbətə əlavə et' funksiyasının arzuolunmaz elementi əlavə etməklə dəyişdirdiyi səbət massivinə istinad edir. Həmişə `səbətə` klonlaşdırmaq, onu redaktə etmək və klonu qaytarmaq üçün `səbətə məhsul əlavə et` üçün əla həll olacaq. Bu, alış-veriş səbətinə istinadı saxlayan heç bir digər funksiyaların hər hansı dəyişiklikdən təsirlənməyəcəyini təmin edir.
+
+Bu yaklaşıma değinecek iki uyarı:
+
+1. Girilen nesnesini gerçekten değiştirmek istediğiniz durumlar olabilir, ancak bunu uyguladığınızda, bu vakaların oldukça nadir olduğunu göreceksiniz. Çoğu şeyin yan etkisi olmayacak şekilde yeniden düzenlenebilir!
+
+2. Büyük nesneleri klonlamak performans açısından çok pahalı olabilir.  Neyse ki, bu pratikte büyük bir sorun değildir, çünkü  bu tür programlama yaklaşımlarını manuel yapmaktansa daha hızlı olmasını ve büyük nesneleri ve dizileri klonlanlarken daha az bellek harcayan [harika kütüphaneler](https://facebook.github.io/immutable-js/) vardır.
+
+**Kötü:**
+
+```javascript
+const addItemToCart = (cart, item) => {
+  cart.push({ item, date: Date.now() });
+};
+```
+
+**İyi:**
+
+```javascript
+const addItemToCart = (cart, item) => {
+  return [...cart, { item, date: Date.now() }];
+};
+```
+
+**[⬆ Başa dön](#İçindekiler)**
